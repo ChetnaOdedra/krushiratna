@@ -1,0 +1,40 @@
+# Resolve react_native_pods.rb with node to allow for hoisting
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
+
+platform :ios, min_ios_version_supported
+prepare_react_native_project!
+
+# ✅ Fix Firebase + Swift pods issue
+use_frameworks! :linkage => :static
+
+target 'KrushiRatana' do
+  config = use_native_modules!
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
+
+  post_install do |installer|
+    # React Native post install
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false
+      # :ccache_enabled => true
+    )
+
+    # ✅ Workaround: Ensure modular headers for Firebase dependencies if needed
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        # Prevent arm64 simulator build issues
+        config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+      end
+    end
+  end
+end

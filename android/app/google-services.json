@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "816578860111",
+    "project_id": "krushiratn-e3a72",
+    "storage_bucket": "krushiratn-e3a72.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816578860111:android:de4cc3f2475beea362863a",
+        "android_client_info": {
+          "package_name": "com.devsinindia.krushiratn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4dr5j2vfTyBKw2HpnDbBQqLvvMsuKOAc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
